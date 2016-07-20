@@ -1,6 +1,7 @@
 package comnanamareproject_inu.httpsgithub.sketch_app;
 
 
+import android.content.Intent;
 import android.content.IntentSender;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -29,6 +30,7 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
     private static final String TAG = "Login_Activity";
     private GoogleApiClient mGoogleApiClient;
     final static String SAMPLE_VIDEO_URL = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
+    public final static String EXTRA_MESSAGE = "comnanamareproject_inu.httpsgithub.sketch_app";
     VideoView videoView;
     SeekBar seekBar;
     Handler updateHandler = new Handler();
@@ -161,9 +163,14 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
 
             }
             if (currentPerson.hasDisplayName()) {
-                Log.d(TAG,"디스플레이 이름 : "+ currentPerson.getDisplayName());
-                Log.d(TAG, "디스플레이 아이디는 : " + currentPerson.getId());
-                userName.setText(currentPerson.getDisplayName()+"님 안녕 하세요");
+                Log.d(TAG,"google+ name  : "+ currentPerson.getDisplayName());
+                Log.d(TAG, "google+ id : " + currentPerson.getId());
+                //userName.setText(currentPerson.getDisplayName()+"님 안녕 하세요");
+                userName.setText(currentPerson.getDisplayName()+"님 로그인 완료 되어 있습니다.");
+                String  message = currentPerson.getDisplayName().toString();
+                Intent intent = new Intent(getApplicationContext(),Menu_Activity.class);
+                intent.putExtra(EXTRA_MESSAGE,message);
+                startActivity(intent);
             }
 
         }
