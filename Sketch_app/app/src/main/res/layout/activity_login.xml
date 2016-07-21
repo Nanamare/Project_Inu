@@ -104,15 +104,13 @@
 
 
     <Button
-        android:textSize="15dp"
+        android:background="@mipmap/google_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="로그인 연동"
         android:onClick="mOnClick"
         android:id="@+id/btn_con"
-        android:layout_above="@+id/textView"
-        android:layout_alignLeft="@+id/userName"
-        android:layout_alignStart="@+id/userName" />
+        android:layout_below="@+id/linearLayout"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -121,8 +119,7 @@
         android:textSize="15dp"
         android:id="@+id/textView"
         android:layout_above="@+id/userName"
-        android:layout_alignLeft="@+id/btn_con"
-        android:layout_alignStart="@+id/btn_con" />
+        android:layout_alignStart="@+id/userName" />
 
     <TextView
         android:id="@+id/userName"
