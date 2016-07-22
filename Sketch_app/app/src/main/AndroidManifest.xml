@@ -9,6 +9,20 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
+    <!-- 카메라 연동, 외부저장소 쓰기 열기를 위한 퍼미션 추가 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+
+    <!-- 파인로케이션 액세스 (GPS)-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- 코스 로케이션 액세스 (Cell-ID/WiFi)-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+
+
 
     <application
         android:allowBackup="true"
@@ -26,6 +40,14 @@
 
         <activity android:name=".Menu_Activity">
         </activity>
+
+        <activity android:name=".Camera_Activity">
+        </activity>
+
+        <activity android:name=".Camera_Result_Activity">
+
+        </activity>
+
     </application>
 
 </manifest>

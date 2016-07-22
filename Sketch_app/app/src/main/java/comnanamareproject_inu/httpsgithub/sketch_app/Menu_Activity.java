@@ -46,9 +46,11 @@ public class Menu_Activity  extends AppCompatActivity {
         picture_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Menu_Activity.this, "사진 찍기 모드", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent,1);
+                Toast.makeText(Menu_Activity.this, "사진 모드", Toast.LENGTH_SHORT).show();
+                //Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                //startActivityForResult(intent,1);
+                Intent intent = new Intent(getApplicationContext(),Camera_Activity.class);
+                startActivity(intent);
             }
         });
     }
