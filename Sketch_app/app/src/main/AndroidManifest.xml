@@ -45,7 +45,9 @@
         </activity>
 
         <activity android:name=".Camera_Result_Activity">
+        </activity>
 
+        <activity android:name=".Map_Activity">
         </activity>
 
     </application>

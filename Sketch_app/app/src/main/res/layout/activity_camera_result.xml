@@ -15,9 +15,17 @@
         android:layout_gravity="center_horizontal" />
 
     <TextView
+        android:layout_gravity="center_horizontal"
         android:id="@+id/location"
         android:textSize="20dp"
         android:hint="위도"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/maker_btn"
+        android:layout_gravity="center_horizontal"
+        android:text="현재위치 마커찍고 그리기"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

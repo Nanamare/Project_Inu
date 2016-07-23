@@ -16,6 +16,8 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +33,11 @@ public class Camera_Result_Activity extends Activity {
     TextView latitude; //위도
     LocationManager lm;
     LocationListener locListenD;
+    double lat;
+    double lng;
+    Button maker_btn;
+    public final static String taglat = "getlatitude";
+    public final static String taglng = "getlongitude";
     public final int MY_PERMISSION_REQUEST_FIND_LOCATION = 1;
     //String provider = LocationManager.GPS_PROVIDER;
     String provider;
@@ -38,6 +45,8 @@ public class Camera_Result_Activity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_result);
+
+        maker_btn = (Button)findViewById(R.id.maker_btn);
 
         //사진
         Intent intent = getIntent();
@@ -83,7 +92,20 @@ public class Camera_Result_Activity extends Activity {
 
         }
 
-
+        maker_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String a,b;
+                a = Double.toString(lat);
+                b = Double.toString(lng);
+                Log.d("lat",a);
+                Log.d("lng",b);
+                Intent intent = new Intent(getApplicationContext(),Map_Activity.class);
+                intent.putExtra(taglat,a);
+                intent.putExtra(taglng,b);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -93,8 +115,8 @@ public class Camera_Result_Activity extends Activity {
         TextView myLocationText;
         myLocationText = (TextView)findViewById(R.id.location);
         if(location != null){
-            double lat = location.getLatitude();
-            double lng = location.getLongitude();
+            lat = location.getLatitude();
+            lng = location.getLongitude();
             latLongString = "위도:"+lat+"\n경도:"+lng;
         }else{
             latLongString = "위치를 찾을수 없음";

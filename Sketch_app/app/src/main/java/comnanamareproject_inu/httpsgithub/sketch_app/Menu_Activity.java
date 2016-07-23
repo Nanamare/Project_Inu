@@ -21,7 +21,9 @@ public class Menu_Activity  extends AppCompatActivity {
     TextView menu_text;
     Button start_btn;
     Button picture_btn;
+    Button map_btn;
     Bitmap bitmap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +32,7 @@ public class Menu_Activity  extends AppCompatActivity {
         menu_text = (TextView)findViewById(R.id.menu_text);
         start_btn = (Button)findViewById(R.id.start_btn);
         picture_btn = (Button)findViewById(R.id.picture_btn);
+        map_btn = (Button)findViewById(R.id.map_btn);
 
         Intent intent= getIntent();
         String name = intent.getStringExtra(Login_Activity.EXTRA_MESSAGE).toString();
@@ -53,6 +56,16 @@ public class Menu_Activity  extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        map_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Menu_Activity.this, "다음 맵 보기", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(),Map_Activity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
