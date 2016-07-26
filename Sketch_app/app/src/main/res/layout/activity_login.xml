@@ -47,6 +47,7 @@
     </LinearLayout>
 
         <VideoView
+        android:layout_weight="2"
         android:id="@+id/videoView"
         android:layout_width="wrap_content"
         android:layout_height="260dp" />
@@ -109,7 +110,7 @@
         android:layout_height="wrap_content"
         android:onClick="mOnClick"
         android:id="@+id/btn_con"
-        android:layout_below="@+id/linearLayout"
+        android:layout_above="@+id/textView"
         android:layout_centerHorizontal="true" />
 
     <Button

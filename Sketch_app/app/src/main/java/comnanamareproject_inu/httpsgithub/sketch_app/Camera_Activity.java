@@ -15,11 +15,13 @@ import android.widget.Toast;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by nanamare on 2016-07-22.
  */
-public class Camera_Activity  extends Activity implements SurfaceHolder.Callback{
+public class Camera_Activity extends Activity implements SurfaceHolder.Callback {
     @SuppressWarnings("deprecation")
     Camera camera;
     SurfaceView surfaceView;
@@ -74,30 +76,26 @@ public class Camera_Activity  extends Activity implements SurfaceHolder.Callback
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
 
-
         jpegCallback = new Camera.PictureCallback() {
 
             @Override
             public void onPictureTaken(byte[] data, Camera camera) {
                 FileOutputStream outStream = null;
                 try {
-
-                    str = String.format("/sdcard/Download/%d.jpg",
-                            System.currentTimeMillis());
+                    long time = System.currentTimeMillis();
+                    SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                    String str2 = dayTime.format(new Date(time));
+                    str = String.format("/sdcard/Download/%s.jpg",
+                            str2);
+                    //System.currentTimeMillis()
                     outStream = new FileOutputStream(str);
                     outStream.write(data);
                     outStream.close();
-                }
-
-                catch (FileNotFoundException e) {
+                } catch (FileNotFoundException e) {
                     e.printStackTrace();
-                }
-
-                catch (IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
-                }
-
-                finally {
+                } finally {
                 }
 
                 Toast.makeText(getApplicationContext(),
@@ -113,6 +111,7 @@ public class Camera_Activity  extends Activity implements SurfaceHolder.Callback
 
 
     }
+
     //콜백 포커싱
     Camera.AutoFocusCallback mAutoFoucus = new Camera.AutoFocusCallback() {
         @Override
@@ -132,18 +131,15 @@ public class Camera_Activity  extends Activity implements SurfaceHolder.Callback
 
         try {
             camera.stopPreview();
-        }
-
-        catch (Exception e) {
+        } catch (Exception e) {
         }
 
         try {
             camera.setPreviewDisplay(surfaceHolder);
             camera.setDisplayOrientation(90);
             camera.startPreview();
-            camera.autoFocus(mAutoFoucus);
-        }
-        catch (Exception e) {
+            //camera.autoFocus(mAutoFoucus);
+        } catch (Exception e) {
         }
     }
 
@@ -167,9 +163,7 @@ public class Camera_Activity  extends Activity implements SurfaceHolder.Callback
 
             camera.setPreviewDisplay(surfaceHolder);
             camera.startPreview();
-        }
-
-        catch (Exception e) {
+        } catch (Exception e) {
             System.err.println(e);
             return;
         }
@@ -187,7 +181,6 @@ public class Camera_Activity  extends Activity implements SurfaceHolder.Callback
         camera.release();
         camera = null;
     }
-
 
 
 }

@@ -3,6 +3,11 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
+    repositories {
+
+        maven { url "https://jitpack.io" }  //현수
+
+    }
     defaultConfig {
         applicationId "comnanamareproject_inu.httpsgithub.sketch_app"
         minSdkVersion 19
@@ -21,6 +26,9 @@ android {
 }
 
 dependencies {
+
+
+    compile 'com.github.ParkSangGwon:TedPermission:v1.0.8' //현수
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'

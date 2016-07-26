@@ -41,12 +41,13 @@ public class Camera_Result_Activity extends Activity {
     public final int MY_PERMISSION_REQUEST_FIND_LOCATION = 1;
     //String provider = LocationManager.GPS_PROVIDER;
     String provider;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_result);
 
-        maker_btn = (Button)findViewById(R.id.maker_btn);
+        maker_btn = (Button) findViewById(R.id.maker_btn);
 
         //사진
         Intent intent = getIntent();
@@ -80,12 +81,12 @@ public class Camera_Result_Activity extends Activity {
                 // 최초로 권한을 요청하는 경우(첫실행)
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSION_REQUEST_FIND_LOCATION);
             }
-        }else {
+        } else {
 
             // 사용 권한이 있음을 확인한 경우
             LocationManager locationManager;
             String context = Context.LOCATION_SERVICE;
-            locationManager = (LocationManager)getSystemService(context);
+            locationManager = (LocationManager) getSystemService(context);
             String provider2 = LocationManager.NETWORK_PROVIDER;
             Location location = locationManager.getLastKnownLocation(provider2);
             updateWithNewLocation(location);
@@ -95,14 +96,14 @@ public class Camera_Result_Activity extends Activity {
         maker_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String a,b;
+                String a, b;
                 a = Double.toString(lat);
                 b = Double.toString(lng);
-                Log.d("lat",a);
-                Log.d("lng",b);
-                Intent intent = new Intent(getApplicationContext(),Map_Activity.class);
-                intent.putExtra(taglat,a);
-                intent.putExtra(taglng,b);
+                Log.d("lat", a);
+                Log.d("lng", b);
+                Intent intent = new Intent(getApplicationContext(), Map_Activity.class);
+                intent.putExtra(taglat, a);
+                intent.putExtra(taglng, b);
                 startActivity(intent);
             }
         });
@@ -110,18 +111,18 @@ public class Camera_Result_Activity extends Activity {
     }
 
 
-    private void updateWithNewLocation(Location location){
+    private void updateWithNewLocation(Location location) {
         String latLongString;
         TextView myLocationText;
-        myLocationText = (TextView)findViewById(R.id.location);
-        if(location != null){
+        myLocationText = (TextView) findViewById(R.id.location);
+        if (location != null) {
             lat = location.getLatitude();
             lng = location.getLongitude();
-            latLongString = "위도:"+lat+"\n경도:"+lng;
-        }else{
+            latLongString = "위도:" + lat + "\n경도:" + lng;
+        } else {
             latLongString = "위치를 찾을수 없음";
         }
-        myLocationText.setText("당신의 현재 위치는:\n"+latLongString);
+        myLocationText.setText("당신의 현재 위치는:\n" + latLongString);
     }
 
     //Contextcompat.checkselfpermission이랑 짝궁 onRequestoncreate랑 비슷함
@@ -136,7 +137,7 @@ public class Camera_Result_Activity extends Activity {
                 } else {
                     // 사용자가 권한 동의를 안함
                     // 권한 동의안함 버튼 선택
-                    Toast.makeText(getApplicationContext() , "권한사용을 동의해주셔야 이용이 가능합니다." , Toast.LENGTH_LONG ).show();
+                    Toast.makeText(getApplicationContext(), "권한사용을 동의해주셔야 이용이 가능합니다.", Toast.LENGTH_LONG).show();
                     finish();
                 }
                 return;

@@ -1,6 +1,7 @@
 package comnanamareproject_inu.httpsgithub.sketch_app;
 
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.media.MediaPlayer;
@@ -23,9 +24,13 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
-public class Login_Activity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener {
+
+public class Login_Activity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "Login_Activity";
     private GoogleApiClient mGoogleApiClient;
@@ -43,12 +48,37 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        EditText tvURL = (EditText)findViewById(R.id.etVieoURL);
+        EditText tvURL = (EditText) findViewById(R.id.etVieoURL);
         tvURL.setText(SAMPLE_VIDEO_URL);
-        videoView = (VideoView)findViewById(R.id.videoView);
-        seekBar = (SeekBar)findViewById(R.id.seekBar);
+        videoView = (VideoView) findViewById(R.id.videoView);
+        seekBar = (SeekBar) findViewById(R.id.seekBar);
         userName = (TextView) findViewById(R.id.userName);
+        PermissionListener permissionlistener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                Toast.makeText(Login_Activity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+            }
+
+
+            @Override
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                Toast.makeText(Login_Activity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+        };
+
+
+        new TedPermission(this)
+                .setPermissionListener(permissionlistener)
+                .setRationaleMessage("we need permission for read contact and find your location")
+                .setPermissions(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)
+                .setPermissions(Manifest.permission.CAMERA, Manifest.permission.CAMERA)
+                .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .check();
+
     }
+
 
     public void loadVideo(View view) {
         //Sample video URL : http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_2mb.mp4
@@ -64,7 +94,7 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
 
                                         @Override
                                         public boolean onInfo(MediaPlayer mp, int what, int extra) {
-                                            switch(what){
+                                            switch (what) {
                                                 case MediaPlayer.MEDIA_INFO_BUFFERING_START:
                                                     // Progress Diaglog
                                                     Toast.makeText(getApplicationContext(), "Buffering", Toast.LENGTH_LONG).show();
@@ -102,18 +132,18 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
     }
 
 
-    public void playVideo(View view){
+    public void playVideo(View view) {
         videoView.requestFocus();
         videoView.start();
 
     }
 
-    public void pauseVideo(View view){
+    public void pauseVideo(View view) {
         videoView.pause();
     }
 
-    private Runnable updateVideoTime = new Runnable(){
-        public void run(){
+    private Runnable updateVideoTime = new Runnable() {
+        public void run() {
             long currentPosition = videoView.getCurrentPosition();
             seekBar.setProgress((int) currentPosition);
             updateHandler.postDelayed(this, 100);
@@ -122,8 +152,8 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
     };
 
 
-    public void mOnClick(View view){
-        switch (view.getId()){
+    public void mOnClick(View view) {
+        switch (view.getId()) {
             case R.id.btn_con:
                 Toast.makeText(this, "접속합니다", Toast.LENGTH_SHORT).show();
 
@@ -163,13 +193,13 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
 
             }
             if (currentPerson.hasDisplayName()) {
-                Log.d(TAG,"google+ name  : "+ currentPerson.getDisplayName());
+                Log.d(TAG, "google+ name  : " + currentPerson.getDisplayName());
                 Log.d(TAG, "google+ id : " + currentPerson.getId());
                 //userName.setText(currentPerson.getDisplayName()+"님 안녕 하세요");
-                userName.setText(currentPerson.getDisplayName()+"님 로그인 완료 되어 있습니다.");
-                String  message = currentPerson.getDisplayName().toString();
-                Intent intent = new Intent(getApplicationContext(),Menu_Activity.class);
-                intent.putExtra(EXTRA_MESSAGE,message);
+                userName.setText(currentPerson.getDisplayName() + "님 로그인 완료 되어 있습니다.");
+                String message = currentPerson.getDisplayName().toString();
+                Intent intent = new Intent(getApplicationContext(), Menu_Activity.class);
+                intent.putExtra(EXTRA_MESSAGE, message);
                 startActivity(intent);
             }
 
@@ -198,7 +228,7 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
             } catch (IntentSender.SendIntentException e) {
                 Log.e(TAG, e.toString(), e);
             }
-        }else{
+        } else {
             Toast.makeText(getApplicationContext(), "이미 로그인 중", Toast.LENGTH_SHORT).show();
         }
     }
