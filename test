@@ -1,0 +1,9 @@
+#include <stdio.h>
+
+void main()
+{
+
+	printf("hello jinyong World ! \n");
+
+	return 0;
+}
